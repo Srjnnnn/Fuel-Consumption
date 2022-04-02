@@ -1,9 +1,9 @@
+require 'pry'
+
 def fuel_consumption(ship_mass, launching_directions, result = [], additional_fuel = 0)
   launch_constant = 0.042
   land_constant = 0.033
-  the_difference = ship_mass - additional_fuel
   current_mass = ship_mass
-  return if the_difference <= 0
 
   launching_directions.each do |item|
     while additional_fuel >= 0
@@ -12,7 +12,6 @@ def fuel_consumption(ship_mass, launching_directions, result = [], additional_fu
                         else
                           ((current_mass * land_constant * item[1]) - 42).floor(0)
                         end
-      the_difference = current_mass - additional_fuel
       current_mass = additional_fuel
       ship_mass += additional_fuel
       result.push(additional_fuel) if additional_fuel.positive?

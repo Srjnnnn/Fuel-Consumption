@@ -1,5 +1,3 @@
-require 'pry'
-
 def fuel_consumption(ship_mass, launching_directions, result = [], additional_fuel = 0)
   launch_constant = 0.042
   land_constant = 0.033

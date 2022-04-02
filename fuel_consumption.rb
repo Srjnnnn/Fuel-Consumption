@@ -2,25 +2,20 @@ def fuel_consumption(ship_mass, launching_directions, result = [], additional_fu
   launch_constant = 0.042
   land_constant = 0.033
   the_difference = ship_mass - additional_fuel
-
-  return if additional_fuel && the_difference <= 0
+  current_mass = ship_mass
+  return if the_difference <= 0
 
   launching_directions.each do |item|
-    current_mass = ship_mass
     while additional_fuel >= 0
-        if item[0] == :launch
-            additional_fuel = ((current_mass * launch_constant * item[1]) - 33).floor(0)
-            the_difference = current_mass - additional_fuel
-            current_mass = additional_fuel
-            ship_mass += additional_fuel
-            result.push(additional_fuel) if additional_fuel.positive?
-        else
-            additional_fuel = ((current_mass * land_constant * item[1]) - 42).floor(0)
-            the_difference = current_mass - additional_fuel
-            current_mass = additional_fuel
-            ship_mass += additional_fuel
-            result.push(additional_fuel) if additional_fuel.positive?
-        end
+      additional_fuel = if item[0] == :launch
+                          ((current_mass * launch_constant * item[1]) - 33).floor(0)
+                        else
+                          ((current_mass * land_constant * item[1]) - 42).floor(0)
+                        end
+      the_difference = current_mass - additional_fuel
+      current_mass = additional_fuel
+      ship_mass += additional_fuel
+      result.push(additional_fuel) if additional_fuel.positive?
     end
   end
   fuel_consumption(ship_mass, launching_directions.slice(1..-1), result) if launching_directions.length > 1
@@ -31,6 +26,7 @@ end
 ## inside while loop make the calculation and decrease the number till it gets zero
 ## calculate the additional fuel and add it to the result
 ## return result
+## call the method for the other item
 
 p fuel_consumption(28_801, [[:land, 9.807]])
 

@@ -1,14 +1,17 @@
+require 'pry'
+
 def fuel_consumption(ship_mass, launching_directions, result = [], additional_fuel = 0)
   launch_constant = 0.042
   land_constant = 0.033
   current_mass = ship_mass
+  first_element = launching_directions.first
 
-  launching_directions.each do |item|
+  first_element.each do |item|
     while additional_fuel >= 0
-      additional_fuel = if item[0] == :launch
-                          ((current_mass * launch_constant * item[1]) - 33).floor(0)
-                        else
-                          ((current_mass * land_constant * item[1]) - 42).floor(0)
+      additional_fuel = if item == :launch
+                          ((current_mass * launch_constant * first_element[1]) - 33).floor(0)
+      elsif item == :land
+                          ((current_mass * land_constant * first_element[1]) - 42).floor(0)
                         end
       current_mass = additional_fuel
       ship_mass += additional_fuel

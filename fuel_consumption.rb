@@ -1,5 +1,3 @@
-require 'pry'
-
 def fuel_consumption(ship_mass, launching_directions, result = [], additional_fuel = 0)
   launch_constant = 0.042
   land_constant = 0.033
@@ -8,9 +6,10 @@ def fuel_consumption(ship_mass, launching_directions, result = [], additional_fu
 
   first_element.each do |item|
     while additional_fuel >= 0
-      additional_fuel = if item == :launch
+      additional_fuel = case item
+                        when :launch
                           ((current_mass * launch_constant * first_element[1]) - 33).floor(0)
-      elsif item == :land
+                        when :land
                           ((current_mass * land_constant * first_element[1]) - 42).floor(0)
                         end
       current_mass = additional_fuel
@@ -22,7 +21,7 @@ def fuel_consumption(ship_mass, launching_directions, result = [], additional_fu
   result.inject(&:+)
 end
 
-# Iterate through the launching directions and put a while loop inside the loop
+# Take the first element of launching directions and put a while loop inside the loop
 ## inside while loop make the calculation and decrease the number till it gets zero
 ## calculate the additional fuel and add it to the result
 ## return result
